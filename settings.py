@@ -16,6 +16,12 @@ SESSION_CONFIGS = [
         'num_demo_participants': 5,
         'app_sequence': ['single_group'],
     },
+    {
+        'name': 'multiple_groups',
+        'display_name': "multiple_groups",
+        'num_demo_participants': 20,
+        'app_sequence': ['multiple_groups'],
+    },
 ]
 
 

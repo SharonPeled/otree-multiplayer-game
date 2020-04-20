@@ -1,0 +1,54 @@
+<script>
+$(function () {
+    $status_span = $('span.status');
+    $timer_span = $('span.timer');
+    var seconds_to_passive = {{ Constants.seconds_to_passive }};
+    $timer_span.html(seconds_to_passive);
+    var is_player_active = "{{ player.set_status }}";
+    console.log(is_player_active);
+    var idleTime;
+    if(is_player_active === "True"){
+        set_active_session()
+    }
+    else{
+        set_passive_session()
+    }
+
+    function set_active_session() {
+        $status_span.html("active");
+        resetActiveStatus();
+        // Increment the idle time counter every second.
+        setInterval(timerIncrement, 1000); // 1 second
+        // Zero the idle timer on mouse movement.
+        $(this).on('keypress', resetActiveStatus);
+        $(this).on('mousemove', resetActiveStatus);
+    }
+    function set_passive_session() {
+        $status_span.html("passive");
+        set_timer_bar(0);
+        $(this).one('keypress', reload);
+        $(this).one('mousemove', reload);
+
+    }
+    function reload() {
+        window.location.reload();
+    }
+    function resetActiveStatus() {
+        idleTime = 0;
+        set_timer_bar(seconds_to_passive)
+    }
+    function timerIncrement() {
+        idleTime = idleTime + 1;
+        // console.log(idleTime);
+        let time_left = Math.max(0,seconds_to_passive - idleTime);
+        set_timer_bar(time_left);
+        if (time_left === 0) {
+            window.location.reload();
+        }
+    }
+    function set_timer_bar(time_left) {
+        $('.to_passive').css('width', time_left / seconds_to_passive * 100 + '%').attr('aria-valuenow', time_left);
+        $timer_span.html(time_left);
+    }
+});
+</script>
