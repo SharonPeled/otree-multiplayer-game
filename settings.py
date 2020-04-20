@@ -10,29 +10,11 @@ SESSION_CONFIG_DEFAULTS = dict(
 )
 
 SESSION_CONFIGS = [
-    dict(
-        name='Nash_T',
-        display_name='Nash_T',
-        num_demo_participants=3,
-        app_sequence=['Nash_T'],
-    ),
-    dict(
-        name='Nash_T_Entrance',
-        display_name='Nash_T_Entrance',
-        num_demo_participants=3,
-        app_sequence=['Nash_T_Entrance'],
-    ),
     {
-        'name': 'match',
-        'display_name': "match",
-        'num_demo_participants': 3,
-        'app_sequence': ['match'],
-    },
-    {
-        'name': 'my_app',
-        'display_name': "my_app",
+        'name': 'single_group',
+        'display_name': "single_group",
         'num_demo_participants': 5,
-        'app_sequence': ['my_app'],
+        'app_sequence': ['single_group'],
     },
 ]
 
