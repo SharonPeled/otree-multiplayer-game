@@ -1,0 +1,51 @@
+{% extends "global/Page.html" %}
+{% load otree staticfiles %}
+
+
+{% block title %}
+    Feedback:
+    <br />
+    <br />
+{% endblock %}
+
+{% block content %}
+
+<p>
+    <b> QUESTION 1:</b>
+    <br/> "If you choose <u>TAILS</u>, and <b>{{entrants1}}</b> more participants choose TAILS,
+    <br/> what will be your final bonus payoff in cents?"
+
+    <br/> You answered: "{{answer1}}".
+    <br/> This was
+
+    {% if correct1 %}
+    the <font color="green"> correct answer! </font>
+
+    {% else %}
+    <font color="red"> incorrect answer!  </font>
+    <br/> The right answer was: "{{right_pay1}}".
+    {% endif %}
+
+    <p> <b> QUESTION 2:</b>
+    <br/> "If you choose <u>TAILS</u>, and <b>{{entrants2}}</b> more participants choose TAILS,
+    <br/> what will be your final bonus payoff in cents?"
+
+    <br/> You answered: "{{answer2}}".
+    <br/> This was
+
+    {% if correct2 %}
+    the <font color="green"> correct answer! </font>
+
+    {% else %}
+    <font color="red"> incorrect answer! </font>
+    <br/> The right answer was: "{{right_pay2}}".
+    {% endif %}
+
+    <p>
+    <br/> Now you will make your actual choice.
+    <br />Please click "Next" to proceed:
+<br />
+    {% next_button %}
+</p>
+
+{% endblock %}

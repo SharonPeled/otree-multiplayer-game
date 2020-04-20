@@ -1,0 +1,30 @@
+{% extends 'otree/WaitPage.html' %}
+{% load otree %}
+{% block title %}{{ title_text }}{% endblock %}
+{% block content %}
+    {{ body_text }}
+    <div class="alert">
+        <h4>Please move your mouse or click any button to remain active!</h4>
+    </div>
+    <div class="alert alert-warning">
+        <h5>Your current status: <span class="status">active</span></h5>
+    </div>
+    <div class="progress" style="height: 50px;">
+        <div class="progress-bar bg-warning progress-bar-animated to_passive"
+             aria-valuemax="{{ Constants.seconds_to_passive }}" role="progressbar">
+
+            <h5 class="mx-3  status-wrapper justify-content-left  d-flex align-items-center">Seconds to change of status:&nbsp <span
+                    class="timer"></span>
+            </h5>
+        </div>
+    </div>
+    {% include 'match/includes/wp_channel.html' %}
+{% endblock %}
+{% block styles %}
+    <style>
+        .status-wrapper {
+            float: left;
+            white-space: nowrap;
+        }
+    </style>
+{% endblock %}

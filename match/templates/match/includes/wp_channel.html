@@ -1,0 +1,10 @@
+{% load otree %}
+<script>
+    var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+    var player_id = {{ player.id }};
+    var ws_path = ws_scheme + '://' + window.location.host + "/wp_tracker/{{ player.id }}";
+    var wp_socket = new WebSocket(ws_path);
+    var seconds_to_passive = {{ Constants.seconds_to_passive }};
+</script>
+
+<script src="{% static 'match/js/wp_channel.js' %}"></script>

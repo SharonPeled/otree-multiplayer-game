@@ -1,0 +1,54 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block styles %}
+<style>
+    .otree-body {
+        max-width:800px
+    }
+</style>
+{% endblock %}
+
+{% block title %}
+    Instructions:
+{% endblock %}
+
+{% block content %}
+
+    <p>
+
+        <br /> You are about to participate in a single coin matching game.
+        <br /> There are <b> {{total_part}} additional </b> participants playing this game with you.
+        <br/> That is, you are one of <b> {{Constants.players_per_group}} players</b>, all playing the same game.
+        <br /> You have to choose between <u>HEADS</u> and <u>TAILS</u>:
+
+        <br /> If you choose <u>HEADS</u>, your bonus payoff will be ${{Constants.low_pay}}
+        (regardless of the choices made by other players).
+        <br /> If you choose <u>TAILS</u>, your bonus payoff will depend on the choice of other participants:
+        <br /> -If <b> <u> at least {{additional_entr}} additional participants</b></u> choose TAILS, your bonus payoff
+        will be ${{Constants.high_pay}},
+        <br /> -Otherwise (if no more than {{additional_entr2}} additional participants choose TAILS)
+        you will not get any bonus payoff.
+
+<p><b>To summarize:</b>
+        <br/>Bonus payment if you choose <u>HEADS</u>: ${{Constants.low_pay}}
+        <br/>Bonus payment if you choose <u>TAILS</u> (depends on other players):
+        <li> ${{Constants.high_pay}} if <b><u> at least {{additional_entr}} of the other {{total_part}}</u> </b> people in the game choose TAILS.</li>
+        {% if additional_entr2 > 0 %}
+            <li>  <b> Nothing </b> otherwise (i.e. if no more than {{additional_entr2}} other people also choose TAILS).</li>
+        {% else %}
+            <li>  <b> Nothing </b> otherwise (i.e. if no one else choose TAILS).</li>
+        {% endif %}
+
+    </p>
+    <p>
+
+        <br/>  Please press "Next" if you are ready to proceed.
+
+
+        {% next_button %}
+    </p>
+
+{% endblock %}
+
+
