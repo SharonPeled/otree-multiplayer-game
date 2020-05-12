@@ -12,12 +12,12 @@ class GameWaitPage(WaitPage):
 
 class ActivePage(Page):
     def is_displayed(self) -> bool:
-        return self.player.is_player_active and self.player.is_player_in
+        return self.player.is_active and self.player.is_in
 
 
 class PassivePage(Page):
     def is_displayed(self) -> bool:
-        return not (self.player.is_player_active and self.player.is_player_in)
+        return not self.player.is_active or not self.player.is_in
 
 
 class TestPage(Page):
