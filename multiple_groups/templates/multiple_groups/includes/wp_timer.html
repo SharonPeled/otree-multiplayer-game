@@ -5,6 +5,9 @@ $(function () {
     var seconds_to_passive = {{ Constants.seconds_to_passive }};
     var passive_allowed_time = {{ Constants.passive_allowed_time }};
     $timer_span.html(seconds_to_passive);
+    // window.onbeforeunload = function () {
+    // return "Do you really want to close?";
+    // };
     var is_player_active = "{{ player.set_status }}";
     if(is_player_active === "True"){
         var seconds_from_last_activity = 0;
@@ -49,11 +52,17 @@ $(function () {
     }
     function passiveTimerIncrement() {
         passive_time = passive_time +1;
-        // if(passive_time > passive_allowed_time){
-        //     confirm("You've been passive for a too long!");
-        //     reload()
+        // if(passive_time > passive_allowed_time)
+        // {
+        //     var xhttp = new XMLHttpRequest();
+        //     xhttp.onreadystatechange = function() {
+        //     if (this.readyState == 4 && this.status == 200) {
+        //         console.log(this.responseText);
+        //         set_timer_bar(5);
+        //     }};
+        //     xhttp.open("GET", "ajax_info.txt", true);
+        //     xhttp.send();
         // }
-        // test git
     }
     function set_timer_bar(time_left) {
         $('.to_passive').css('width', time_left / seconds_to_passive * 100 + '%').attr('aria-valuenow', time_left);

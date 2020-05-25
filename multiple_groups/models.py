@@ -20,7 +20,7 @@ class Constants(BaseConstants):
     name_in_url = 'multiple_groups'
     players_per_group = None
     num_rounds = 1
-    seconds_to_passive = 5
+    seconds_to_passive = 10
     passive_allowed_time = 2
     group_size = 20
     active_players_size = 3
