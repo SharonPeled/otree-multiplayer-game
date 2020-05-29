@@ -8,7 +8,8 @@ from otree.api import (
     Currency as c,
     currency_range,
 )
-
+import time
+import math
 author = 'Sharon Peled'
 
 doc = """
@@ -20,8 +21,8 @@ class Constants(BaseConstants):
     name_in_url = 'multiple_groups'
     players_per_group = None
     num_rounds = 1
-    seconds_to_passive = 10
-    passive_allowed_time = 2
+    seconds_to_passive = 20
+    passive_allowed_time = 20
     group_size = 20
     active_players_size = 3
 
@@ -77,11 +78,32 @@ class Player(BasePlayer):
     is_in = models.BooleanField(initial=True) # if the player can enter a game
     group_num = models.IntegerField(initial=0) # number of game the player has entered (0 - didn't enter a game at all)
     force_passive = models.BooleanField(initial=True)
+    t_p = models.LongStringField(initial="init_passive")
+    t_a = models.LongStringField(initial="init_active")
+    beg_passive_time = models.FloatField(initial=time.time())
+
+    def t_passive(self):
+        self.t_p = "EDITED"
+        return self.t_p
+
+    def t_active(self):
+        self.t_a = "EDITED"
+        return self.t_a
 
     def set_status(self):
+        # print(self.id,self.is_active)
+        # print(round(time.time() - self.beg_passive_time))
+        # print(round(self.beg_passive_time))
         if self.force_passive:
             self.is_active = False
             self.force_passive = False
+            self.beg_passive_time = time.time()
             return self.is_active
+        if not self.is_active: # was passive and come to get change
+            # he was passive more time then allowed - should remain passive, in the next reload he'd be changed to active.
+            if Constants.passive_allowed_time <= (time.time() - self.beg_passive_time):
+                self.beg_passive_time = time.time()
+                return self.is_active
         self.is_active = not self.is_active
+        self.beg_passive_time = time.time()
         return self.is_active
