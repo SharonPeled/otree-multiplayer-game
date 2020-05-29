@@ -1,5 +1,10 @@
 <script>
 $(function () {
+    // window.onload = function(){
+    //     console.log("onload exe");
+    // };
+    console.log("{{ player.t_a }}");
+    console.log("{{ player.t_p }}");
     $status_span = $('span.status');
     $timer_span = $('span.timer');
     var seconds_to_passive = {{ Constants.seconds_to_passive }};
@@ -19,7 +24,6 @@ $(function () {
     }
 
     function set_active_session() {
-
         $status_span.html("active");
         resetActiveStatus();
         // Increment the idle time counter every second.
@@ -27,6 +31,7 @@ $(function () {
         // Zero the idle timer on mouse movement.
         $(this).on('keypress', resetActiveStatus);
         $(this).on('mousemove', resetActiveStatus);
+        $(this).on('click', resetActiveStatus);
     }
     function set_passive_session() {
         $status_span.html("passive");
@@ -37,6 +42,7 @@ $(function () {
     }
     function reload() {
         window.location.reload();
+        // console.log("reload");
     }
     function resetActiveStatus() {
         seconds_from_last_activity = 0;
@@ -52,17 +58,20 @@ $(function () {
     }
     function passiveTimerIncrement() {
         passive_time = passive_time +1;
-        // if(passive_time > passive_allowed_time)
-        // {
-        //     var xhttp = new XMLHttpRequest();
-        //     xhttp.onreadystatechange = function() {
-        //     if (this.readyState == 4 && this.status == 200) {
-        //         console.log(this.responseText);
-        //         set_timer_bar(5);
-        //     }};
-        //     xhttp.open("GET", "ajax_info.txt", true);
-        //     xhttp.send();
-        // }
+        // $status_span.html("passive ("+passive_time.toString()+" seconds)");
+        if(passive_time === passive_allowed_time){
+            reload();
+            // console.log("Stop");
+            // alert(passive_time.toString());
+            // window.stop();
+        }
+        // $(function() {
+        //     $('a').click(function() {
+        //         $.get('http://echo.jsontest.com/Hello/world', function(data) {
+        //             $('#mydiv').html(data['Hello']);
+        //         });
+        //     });
+        // });
     }
     function set_timer_bar(time_left) {
         $('.to_passive').css('width', time_left / seconds_to_passive * 100 + '%').attr('aria-valuenow', time_left);

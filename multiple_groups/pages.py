@@ -2,6 +2,9 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
 
+class EntrancePage(Page):
+    pass
+
 class GameWaitPage(WaitPage):
     template_name = 'multiple_groups/GameWaitPage.html'
     group_by_arrival_time = True
@@ -25,4 +28,4 @@ class TestPage(Page):
     pass
 
 
-page_sequence = [GameWaitPage, ActivePage, PassivePage]
+page_sequence = [EntrancePage, GameWaitPage, ActivePage, PassivePage]
