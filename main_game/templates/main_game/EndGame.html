@@ -1,0 +1,37 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+
+    Thanks for taking part in this experiment.
+
+{% endblock %}
+
+
+{% block content %}
+
+    <p>
+        The paying round was {{ paying_round }}.
+        {% if paying_decision %}
+        <br> In round {{ paying_round }}, you choose Tails.
+        {% else %}
+        <br> In round {{ paying_round }}, you choose Heads
+        {% endif %}.
+        <br> The total number of TAILS in this round was {{ number_entrants }}.
+        <br> Thus, your payoff in that round was: {{paying_round_payoff}}.
+         <br> Your final payoff is: {{ finalpay }}.
+
+    </p>
+
+    <p>
+        <br> <b>Completion code: {{completion_code}} </b>
+    </p>
+
+
+Please click "Next" to complete the experiment:
+{% next_button %}
+
+{% endblock %}
+
+
+

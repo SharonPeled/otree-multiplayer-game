@@ -1,0 +1,35 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block styles %}
+<style>
+    .otree-timer {
+        display: none;
+    }
+</style>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<p>
+        <br/>Bonus payment if you choose <u>HEADS</u>: ${{Constants.low_pay}}
+        <br/>Bonus payment if you choose <u>TAILS</u> (depends on other players):
+        <li> ${{Constants.high_pay}} if <b><u> at least {{at_least_tails_to_get_bonus}} of the
+        other {{group_size_without_current}}</u> </b> people in the game choose TAILS.</li>
+        {% if not_enough_tails_to_get_bonus > 0 %}
+            <li>  <b> Nothing </b> otherwise (i.e. if no more than {{not_enough_tails_to_get_bonus}} other people also choose TAILS).</li>
+        {% else %}
+            <li>  <b> Nothing </b> otherwise (i.e. if no one else choose TAILS).</li>
+        {% endif %}
+</p>
+
+    {% formfield player.play label="Please make your choice:" %}
+
+
+    {% next_button %}
+
+{% endblock %}
+
+

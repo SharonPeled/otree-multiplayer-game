@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+<style>
+    .otree-timer {
+        display: none;
+    }
+</style>
+
+<br>
+{% block title %}
+    Game on
+{% endblock %}
+
+{% block content %}
+    <div>You are moving to the game</div>
+    <br>
+    <div>Please click next if you are not moving automatically</div>
+    <br>
+    {% next_button %}
+
+{% endblock %}
