@@ -1,4 +1,5 @@
 from os import environ
+from global_utilities.utils import GlobalConstant
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
 # in SESSION_CONFIGS, except those that explicitly override it.
@@ -9,19 +10,20 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
+
 SESSION_CONFIGS = [
     {
         'name': 'full_game',
         'display_name': "Heads/Tails Game",
-        'num_demo_participants': 20,
-        'app_sequence': ['multiple_groups'],
+        'num_demo_participants': GlobalConstant.group_size,
+        'app_sequence': ['prior_game', "waiting_room", "main_game"],
         'mturk_hit_settings': dict(
             keywords='bonus, study',
             title="Multiplayer Heads/Tails Game",
             description='Academic experiment in which you need to play a very short and simple multi-person game.',
             frame_height=500,
             template='global/mturk_template.html',
-            # minutes_allotted_per_assignment=60,
+            minutes_allotted_per_assignment=300,
             expiration_hours=7 * 24,
             qualification_requirements=[]
             # grant_qualification_id='YOUR_QUALIFICATION_ID_HERE', # to prevent retakes
@@ -62,6 +64,24 @@ SESSION_CONFIGS = [
                                     # grant_qualification_id='YOUR_QUALIFICATION_ID_HERE', # to prevent retakes
                                 )
     },
+    {
+        'name': 'waiting_room',
+        'display_name': "waiting_room",
+        'num_demo_participants': 20,
+        'app_sequence': ['waiting_room']
+    },
+    {
+        'name': 'main_game',
+        'display_name': "main_game",
+        'num_demo_participants': GlobalConstant.group_size,
+        'app_sequence': ['waiting_room', 'main_game']
+    },
+    {
+        'name': 'prior_game',
+        'display_name': "prior_game",
+        'num_demo_participants': 3,
+        'app_sequence': ['prior_game']
+    }
 ]
 
 

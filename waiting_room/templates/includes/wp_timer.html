@@ -1,16 +1,10 @@
 <script>
 $(function () {
-    // window.onload = function(){
-    //     console.log("onload exe");
-    // };
     $status_span = $('span.status');
     $timer_span = $('span.timer');
     var seconds_to_passive = {{ Constants.seconds_to_passive }};
     var passive_allowed_time = {{ Constants.passive_allowed_time }};
     $timer_span.html(seconds_to_passive);
-    // window.onbeforeunload = function () {
-    // return "Do you really want to close?";
-    // };
     var is_player_active = "{{ player.set_status }}";
     if(is_player_active === "True"){
         var seconds_from_last_activity = 0;
@@ -56,20 +50,9 @@ $(function () {
     }
     function passiveTimerIncrement() {
         passive_time = passive_time +1;
-        // $status_span.html("passive ("+passive_time.toString()+" seconds)");
         if(passive_time === passive_allowed_time){
             reload();
-            // console.log("Stop");
-            // alert(passive_time.toString());
-            // window.stop();
         }
-        // $(function() {
-        //     $('a').click(function() {
-        //         $.get('http://echo.jsontest.com/Hello/world', function(data) {
-        //             $('#mydiv').html(data['Hello']);
-        //         });
-        //     });
-        // });
     }
     function set_timer_bar(time_left) {
         $('.to_passive').css('width', time_left / seconds_to_passive * 100 + '%').attr('aria-valuenow', time_left);

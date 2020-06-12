@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Game over
+{% endblock %}
+
+{% block content %}
+    <div>You didn't make it to the game.
+    <br> Better luck next time!
+    </div>
+<p>
+    <br> <b>Completion code: {{completion_code}} </b>
+    <br> Your final payoff is: {{ finalpay }}.
+</p>
+
+{% endblock %}

@@ -23,8 +23,13 @@ class Constants(BaseConstants):
     num_rounds = 1
     seconds_to_passive = 20
     passive_allowed_time = 20
-    group_size = 20
-    active_players_size = 3
+    group_size = 5
+    active_players_per_group = 3 # number of players per group
+    tail_rate=0.95 # percentage of participants who chose Tails to get the bonus
+    high_pay=0.40
+    low_pay=0.20
+    q1_reduce_factor = 1/4
+    q2_reduce_factor = 3/4
 
 
 class Subsession(BaseSubsession):
@@ -36,13 +41,13 @@ class Subsession(BaseSubsession):
     def group_by_arrival_time_method(self, waiting_players):
         # print(waiting_players)
         # not enough spots/links to form a group
-        if Constants.group_size - self.tot_playing_players < Constants.active_players_size :
+        if Constants.group_size - self.tot_playing_players < Constants.active_players_per_group :
             self.remove_players(waiting_players)
             return waiting_players
         active_players = [w for w in waiting_players if w.is_active]
         passive_players = [w for w in waiting_players if not w.is_active]
         # not enough active players to form a group
-        if len(active_players) < Constants.active_players_size:
+        if len(active_players) < Constants.active_players_per_group:
             # if all players arrived and unable to form a group with the current players
             if self.tot_playing_players+len(waiting_players) == Constants.group_size:
                 self.remove_players(waiting_players)
@@ -74,26 +79,31 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    # general info
+    age = models.PositiveIntegerField(
+        verbose_name='What is your age?',
+        min=13, max=125)
+    gender = models.CharField(
+        choices=['Male', 'Female','Other'],
+        verbose_name='What is your gender?',
+        widget=widgets.RadioSelect())
+    q1_answer = models.StringField(
+        choices=['0', '10', '20', '30', '40'],
+        widget=widgets.RadioSelect())
+    q2_answer = models.StringField(
+        choices=['0', '10', '20', '30', '40'],
+        widget=widgets.RadioSelect())
+    # game info
+    play = models.BooleanField()
+
+
     is_active = models.BooleanField(initial=False) # if the player is active or not
     is_in = models.BooleanField(initial=True) # if the player can enter a game
     group_num = models.IntegerField(initial=0) # number of game the player has entered (0 - didn't enter a game at all)
     force_passive = models.BooleanField(initial=True)
-    t_p = models.LongStringField(initial="init_passive")
-    t_a = models.LongStringField(initial="init_active")
     beg_passive_time = models.FloatField(initial=time.time())
 
-    def t_passive(self):
-        self.t_p = "EDITED"
-        return self.t_p
-
-    def t_active(self):
-        self.t_a = "EDITED"
-        return self.t_a
-
     def set_status(self):
-        # print(self.id,self.is_active)
-        # print(round(time.time() - self.beg_passive_time))
-        # print(round(self.beg_passive_time))
         if self.force_passive:
             self.is_active = False
             self.force_passive = False
