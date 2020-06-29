@@ -12,15 +12,18 @@
 
     <p>
         The paying round was {{ paying_round }}.
-        {% if paying_decision %}
-        <br> In round {{ paying_round }}, you choose Tails.
+        {% if is_timeout %}
+            <br> In round {{ paying_round }} you timed-out and therefore your payoff was reduced by {{penalty}}.
         {% else %}
-        <br> In round {{ paying_round }}, you choose Heads
-        {% endif %}.
-        <br> The total number of TAILS in this round was {{ number_entrants }}.
-        <br> Thus, your payoff in that round was: {{paying_round_payoff}}.
-         <br> Your final payoff is: {{ finalpay }}.
-
+            {% if paying_decision %}
+            <br> In round {{ paying_round }}, you choose Tails.
+            {% else %}
+            <br> In round {{ paying_round }}, you choose Heads
+            {% endif %}.
+            <br> The total number of TAILS in this round was {{ number_entrants }}.
+            <br> Thus, your payoff in that round was: {{paying_round_payoff}}.
+        {% endif %}
+        <br> Your final payoff is: {{ finalpay }}.
     </p>
 
     <p>

@@ -16,7 +16,7 @@ SESSION_CONFIGS = [
         'name': 'full_game',
         'display_name': "Heads/Tails Game",
         'num_demo_participants': GlobalConstant.group_size,
-        'app_sequence': ['prior_game', "waiting_room", "main_game"],
+        'app_sequence': ["prior_game", "waiting_room","main_game"],
         'mturk_hit_settings': dict(
             keywords='bonus, study',
             title="Multiplayer Heads/Tails Game",
@@ -24,7 +24,7 @@ SESSION_CONFIGS = [
             frame_height=500,
             template='global/mturk_template.html',
             minutes_allotted_per_assignment=300,
-            expiration_hours=7 * 24,
+            expiration_hours = 24,
             qualification_requirements=[]
             # grant_qualification_id='YOUR_QUALIFICATION_ID_HERE', # to prevent retakes
         )
@@ -38,13 +38,13 @@ LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = True
+USE_POINTS = False
 
 ROOMS = []
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
-ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
+ADMIN_PASSWORD = "Sharon123"
 
 DEMO_PAGE_INTRO_HTML = """ """
 
