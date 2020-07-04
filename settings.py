@@ -15,19 +15,8 @@ SESSION_CONFIGS = [
     {
         'name': 'full_game',
         'display_name': "Heads/Tails Game",
-        'num_demo_participants': GlobalConstant.group_size,
-        'app_sequence': ["prior_game", "waiting_room","main_game"],
-        'mturk_hit_settings': dict(
-            keywords='bonus, study',
-            title="Multiplayer Heads/Tails Game",
-            description='Academic experiment in which you need to play a very short and simple multi-person game.',
-            frame_height=500,
-            template='global/mturk_template.html',
-            minutes_allotted_per_assignment=300,
-            expiration_hours = 24,
-            qualification_requirements=[]
-            # grant_qualification_id='YOUR_QUALIFICATION_ID_HERE', # to prevent retakes
-        )
+        'num_demo_participants': 100,
+        'app_sequence': ["prior_game", "waiting_room","main_game"]
     }
 ]
 

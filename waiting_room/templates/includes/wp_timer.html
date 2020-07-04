@@ -6,6 +6,8 @@ $(function () {
     var passive_allowed_time = {{ Constants.passive_allowed_time }};
     $timer_span.html(seconds_to_passive);
     var is_player_active = "{{ player.set_status }}";
+    var seconds_to_refresh = "{{ player.seconds_left_to_refresh }}";
+    setInterval(reload, seconds_to_refresh*1000); // seconds_to_refresh seconds
     if(is_player_active === "True"){
         var seconds_from_last_activity = 0;
         set_active_session()

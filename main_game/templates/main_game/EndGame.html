@@ -13,7 +13,7 @@
     <p>
         The paying round was {{ paying_round }}.
         {% if is_timeout %}
-            <br> In round {{ paying_round }} you timed-out and therefore your payoff was reduced by {{penalty}}.
+            <br> You we're timed-out for too many game rounds, therefore, your payoff was reduced by {{penalty}}.
         {% else %}
             {% if paying_decision %}
             <br> In round {{ paying_round }}, you choose Tails.
