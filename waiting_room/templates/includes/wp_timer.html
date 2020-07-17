@@ -2,10 +2,13 @@
 $(function () {
     $status_span = $('span.status');
     $timer_span = $('span.timer');
+    // $('span.number_waiting').html("{{player.currently_waiting_participants}}");
+    // $('#button').on('click', function (e) {reload()});
     var seconds_to_passive = {{ Constants.seconds_to_passive }};
     var passive_allowed_time = {{ Constants.passive_allowed_time }};
     $timer_span.html(seconds_to_passive);
     var is_player_active = "{{ player.set_status }}";
+    set_alert_type(is_player_active === "True");
     var seconds_to_refresh = "{{ player.seconds_left_to_refresh }}";
     setInterval(reload, seconds_to_refresh*1000); // seconds_to_refresh seconds
     if(is_player_active === "True"){
@@ -59,6 +62,19 @@ $(function () {
     function set_timer_bar(time_left) {
         $('.to_passive').css('width', time_left / seconds_to_passive * 100 + '%').attr('aria-valuenow', time_left);
         $timer_span.html(time_left);
+    }
+    
+    function set_alert_type(is_active) {
+        if(is_active)
+        {
+            $('.current_status').addClass("alert alert-success");
+            // $('.current_status').css("background-color", "#b3ffb3");
+        }
+        else
+        {
+            $('.current_status').addClass("alert alert-danger");
+            // $('.current_status').css("background-color", "#ff8080");
+        }
     }
 });
 </script>

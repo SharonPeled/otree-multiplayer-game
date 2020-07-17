@@ -16,7 +16,7 @@ SESSION_CONFIGS = [
         'name': 'full_game',
         'display_name': "Heads/Tails Game",
         'num_demo_participants': 100,
-        'app_sequence': ["prior_game", "waiting_room","main_game"]
+        'app_sequence': ["waiting_room","main_game"]
     }
 ]
 
