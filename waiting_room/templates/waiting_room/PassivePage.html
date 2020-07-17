@@ -10,8 +10,19 @@
     <br> Better luck next time!
     </div>
 <p>
+    <br>
+    {% if was_active_enough %}
+    You were active while waiting, therefore, you get the full payment.
+    <br> Your final payoff is: <font color="#32cd32"> {{finalpay}} </font>.
+    <br>
+    {% formfield player.email label="If you'd still like to participant in the experiment, please leave your email address and we'll contact you with the details.<br> Your Email Address" %}
+    Thank you for your collaboration!
+    {% else %}
+    You were not active enough while waiting, therefore, you get a reduced payment.
+    <br> Your final payoff is: <font color="#cd5c5c"> {{finalpay}} </font>.
+    {% endif %}
+    <br>
     <br> <b>Completion code: {{completion_code}} </b>
-    <br> Your final payoff is: {{ finalpay }}.
 </p>
 
 {% endblock %}

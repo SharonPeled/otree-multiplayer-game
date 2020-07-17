@@ -2,8 +2,6 @@
 $(function () {
     $status_span = $('span.status');
     $timer_span = $('span.timer');
-    // $('span.number_waiting').html("{{player.currently_waiting_participants}}");
-    // $('#button').on('click', function (e) {reload()});
     var seconds_to_passive = {{ Constants.seconds_to_passive }};
     var passive_allowed_time = {{ Constants.passive_allowed_time }};
     $timer_span.html(seconds_to_passive);
