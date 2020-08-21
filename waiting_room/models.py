@@ -93,10 +93,6 @@ class Subsession(BaseSubsession):
     @staticmethod
     def get_paying_round():
         return random.randint(1, GlobalConstant.game_rounds)
-        # if random.choice(["1st round", "random_round"]) == "1st round":
-        #     return 1
-        # else:
-        #     return random.randint(1,GlobalConstant.game_rounds)
 
     @staticmethod
     def sort_by_entrace(player):

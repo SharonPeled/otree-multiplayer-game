@@ -31,18 +31,18 @@ class PassivePage(Page):
         return not self.player.is_active or not self.player.is_in
 
     def vars_for_template(self) -> dict:
-        was_active_enough = False
         if self.player.active_seconds > Constants.waiting_time_threshold * Constants.activeness_waiting_threshold:
             # was active enough time to get good payment
-            self.player.payoff = c(Constants.basic_payment)
+            self.player.payoff = c(0.0) # All participation fee
             was_active_enough = True
         else:
             # wan't active very often
-            self.player.payoff = c(Constants.basic_payment + Constants.penalty)
+            self.player.payoff = c(0.0 + Constants.penalty) # only part of the participation fee
+            was_active_enough = False
         return \
         {
             "completion_code":Constants.completion_code,
-            "finalpay": self.player.payoff,
+            "finalpay": self.player.payoff + Constants.basic_payment,
             "was_active_enough": was_active_enough
         }
 

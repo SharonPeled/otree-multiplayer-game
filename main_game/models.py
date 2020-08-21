@@ -42,6 +42,7 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
 
     def group_by_arrival_time_method(self, waiting_players):
+        # moving to next round
         c = Counter([player.participant.vars["game_number"] for player in waiting_players])
         users_to_proceed = []
         for player in waiting_players:
@@ -54,7 +55,7 @@ class Subsession(BaseSubsession):
     def set_payoffs(self,users_to_proceed):
         games_numbers = set([player.participant.vars["game_number"] for player in users_to_proceed])
         for game_number in games_numbers:
-            if self.session.vars["paying_round_"+str(game_number)] == (self.round_number-1):
+            if self.session.vars["paying_round_"+str(game_number)] == (self.round_number-1): # the last round was the paying round
                 game_players = [player for player in users_to_proceed if player.participant.vars["game_number"]==game_number]
                 self.set_game_payoffs(game_players)
 
@@ -63,14 +64,12 @@ class Subsession(BaseSubsession):
         for player in game_players:
             player.participant.vars["number_of_tails_in_paying_round"] = number_of_tails
             player.participant.vars["play_in_paying_round"] = player.in_round(self.round_number-1).play
-            payoff = GlobalConstant.basic_payment
+            payoff = 0.0
             # if player.in_round(self.round_number-1).timeout_submission:
             #     payoff += Constants.penalty
-            # el
             if player.in_round(self.round_number-1).play == False:  # chose heads
                 payoff += Constants.low_pay
             else:  # chose tails
-                # self.number_entrants >= int(Constants.players_per_group * Constants.t_rate):  # SUCCESS
                 if number_of_tails >= (int(len(game_players) * Constants.tail_rate)-1):
                     payoff += Constants.high_pay
                 else:
