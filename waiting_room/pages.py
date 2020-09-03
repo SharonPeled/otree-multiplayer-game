@@ -22,7 +22,7 @@ class ActivePage(Page):
         return self.player.is_active and self.player.is_in
 
 
-# Page 2: Game over
+# Page 2: Game over - not necessary a passive user, maybe just waited for too long
 class PassivePage(Page):
     form_model = 'player'
     form_fields = ['email']

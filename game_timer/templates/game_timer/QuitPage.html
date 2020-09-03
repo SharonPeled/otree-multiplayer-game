@@ -1,0 +1,16 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    Game over
+{% endblock %}
+
+{% block content %}
+<p>
+    <br>
+    You chose to quit the experiment at an early stage, therefore, you get a reduced payment.
+    <br> Your final payoff is: <font color="#daa520"> {{finalpay}} </font>.
+    <br>
+    <br> <b>Completion code: {{completion_code}} </b>
+</p>
+{% endblock %}

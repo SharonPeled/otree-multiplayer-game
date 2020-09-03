@@ -1,0 +1,123 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+
+{% block title %}
+    The first part of the experiment is over
+{% endblock %}
+
+{% block content %}
+
+    <font size="6" ><div style="text-align:center;font-weight:bold" id="info" class="p-2 mb-2 bg-info text-dark">Loading ...</div></font>
+    <font size="6" ><div style="text-align:center;font-weight:bold" id="counter" class="p-2 mb-2 bg-warning text-dark">Loading ...</div></font>
+
+<script>
+// Set the date we're counting down to
+var countDownDate = new Date("{{ experiment_starting_time }}").getTime();
+var reminder_enable = true;
+// Update the count down every 1 second (1000 milliseconds)
+x = setInterval(timer, 1000);
+prevent_enter_submit();
+set_info();
+
+function set_info() {
+    document.getElementById("info").innerHTML = "Experiment starts on " + "{{ experiment_starting_time }}" + " NY time.";
+}
+
+function timer() {
+  // Get today's date and time
+  var now = get_time();
+  // Find the distance between now and the count down date
+  var distance = countDownDate-now;
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  // Display the result in the element with id="demo"
+  document.getElementById("counter").innerHTML = "Experiment starts in " + minutes + " minutes and " + seconds + " seconds ";
+  //removing the option for reminder
+  if(reminder_enable && (distance/(1000*60) <= {{reminder_time}})){
+      document.getElementById("reminder_section").remove();
+      reminder_enable = false;
+  }
+  // If the count down is finished, write some text
+  if (distance <= 0) {
+    clearInterval(x);
+    $("#button_start").removeClass("disabled");
+    $("#button_start").removeAttr("type");
+    document.getElementById("counter").innerHTML = "Experiment ready to start";
+  }
+}
+
+  function get_time() {
+      let now = new Date(); // current timezone
+      let utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+      let ny_time = new Date(utc - 4*3600*1000);
+      return ny_time
+  }
+  function prevent_enter_submit() {
+  $(document).ready(function() {
+  $(window).keydown(function(event){
+    if(event.keyCode === 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+  }
+</script>
+
+    <font size="4"> You finished the first part of the experiment and earned a reduced payment - {{finalpay}}. <br>
+    The rest of the experiment starts when the timer reaches 0.0, then, the "Start Experiment" button will be visible, and pressing it will forward you to the rest of the experiment.<br>
+    Completing the experiment will get you the full payment + bonus.<br>
+    <br>
+
+    <button name="is_player_wants_to_proceed" value="True" type="button" id="button_start" class="btn btn-success btn-lg disabled" >Start Experiment</button>
+    <button type="button" id="button_quit" data-toggle="modal" data-target="#centralModal" class="btn btn-danger btn-lg">Quit</button>
+    <!--Alert -->
+    <!-- Central Modal Medium -->
+    <div class="modal fade" id="centralModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <!--Content-->
+        <div class="modal-content">
+          <!--Header-->
+          <div class="modal-header">
+            <h4 class="modal-title w-100" id="myModalLabel">Clicking "Quit"</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!--Body-->
+          <div class="modal-body">
+            Are you sure you want to quit the experiment?
+          </div>
+          <!--Footer-->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button name="is_player_wants_to_proceed" value="False" class="btn btn-primary">Yes</button>
+          </div>
+        </div>
+        <!--/.Content-->
+      </div>
+    </div>
+
+    <br>
+    <br>
+    If you like to quit now and redeem your payment, please press <font color="#dc143c"><b>Quit</b></font>.<br>
+    <br>
+    If you chose to participate in the rest of the experiment, <u><b>please leave your browser tab open</b></u> and press<br>
+    <font color="#228b22"><b>Start Experiment</b></font> once available.<br>
+    <br>
+    </font>
+    <div id="reminder_section">
+    <font size="4">
+        If you'd like to get an email reminder {{reminder_time}} minutes before the experiment starts, please provide your email address
+        <br>and press <font color="#0000cd"><b>Remind me</b></font>.<br>
+        <br>
+        {% formfield player.email label="Your Email Address" %}
+    <button name="is_player_wants_reminder" value="True" id="button_reminder" class="btn btn-primary btn-lg">Remind Me</button>
+    </font>
+    </div>
+
+{% endblock %}
+
