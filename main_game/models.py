@@ -22,15 +22,11 @@ class Constants(BaseConstants):
     name_in_url = 'Heads/Tails_Game'
     players_per_group = None
     num_rounds = GlobalConstant.game_rounds + 1 # special case, final round is only the end page
-    seconds_to_passive = GlobalConstant.seconds_to_passive
-    passive_allowed_time = GlobalConstant.passive_allowed_time
     group_size = GlobalConstant.group_size
     active_players_per_group = GlobalConstant.active_players_per_group
     tail_rate = GlobalConstant.tail_rate
     high_pay = GlobalConstant.high_pay
     low_pay = GlobalConstant.low_pay
-    q1_reduce_factor = GlobalConstant.q1_reduce_factor
-    q2_reduce_factor = GlobalConstant.q2_reduce_factor
     time_to_response_first_round = GlobalConstant.time_to_response_first_round
     time_to_response = GlobalConstant.time_to_response
     penalty = GlobalConstant.penalty
@@ -42,7 +38,8 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
 
     def group_by_arrival_time_method(self, waiting_players):
-        # moving to next round
+        # this function makes sure that the players play within the groups we assigned previously.
+        # making sure that each round is played separately for each group.
         c = Counter([player.participant.vars["game_number"] for player in waiting_players])
         users_to_proceed = []
         for player in waiting_players:
