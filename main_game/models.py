@@ -52,11 +52,13 @@ class Subsession(BaseSubsession):
     def set_payoffs(self,users_to_proceed):
         games_numbers = set([player.participant.vars["game_number"] for player in users_to_proceed])
         for game_number in games_numbers:
-            if self.session.vars["paying_round_"+str(game_number)] == (self.round_number-1): # the last round was the paying round
-                game_players = [player for player in users_to_proceed if player.participant.vars["game_number"]==game_number]
-                self.set_game_payoffs(game_players)
+            game_players = [player for player in users_to_proceed if player.participant.vars["game_number"]==game_number]
+            self.set_game_payoffs(game_players,game_number)
 
-    def set_game_payoffs(self,game_players):
+    def set_game_payoffs(self,game_players,game_number):
+        if not self.session.vars["paying_round_" + str(game_number)] == (
+                self.round_number - 1):  # the last round was the paying round
+            return
         number_of_tails = sum([player.in_round(self.round_number-1).play for player in game_players])
         for player in game_players:
             player.participant.vars["number_of_tails_in_paying_round"] = number_of_tails
