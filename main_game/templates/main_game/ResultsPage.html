@@ -16,7 +16,9 @@
 {% block content %}
 
         {% if penalty > 0 %}
-            <font size="3"> You did not respond in time! Thus your payoff is reduced by {{penalty}}! </font>
+            You were timed-off - you did not respond in time! <br>
+            If you'll not take an active participation in the experiment your payoff will be reduced. <br>
+            A Randomly chosen play was chosen for you.<br>
         {% endif %}
 
         {% if play %}
